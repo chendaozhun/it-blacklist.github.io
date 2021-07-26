@@ -1,34 +1,41 @@
-import { reactive, h,defineComponent } from 'vue';
+import { reactive, h, defineComponent, onMounted } from 'vue'
 import {View} from '@tarojs/components'
 import {Button } from '@nutui/nutui-taro'
+import { request} from '@tarojs/taro'
 import './index.scss'
+import {useAccess} from '../../utils'
 
 export default defineComponent({
   name: 'Index',
   setup () {
-    const state = reactive({
-      msg: 'hello world',
-      msg2: '你成功了～',
-      type: 'text',
-      show: false,
-      cover: false,
-    });
-
-    const handleClick = (type: string, msg: string, cover: boolean = false) => {
-      console.log('handleClick')
-      state.show = true;
-      state.msg2 = msg;
-      state.type = type;
-      state.cover = cover;
-    };
+    onMounted(()=>{
+      console.log(useAccess)
+      setTimeout(()=>{
+        // request({
+        //   url:`https://api.weixin.qq.com/tcb/databasequery?access_token=${useAccess.access_token}&env=prod-4g7smzwkdb65a941`,
+        //   method:'POST',
+        //   data: {
+        //     env:'prod-4g7smzwkdb65a941',
+        //     query: "db.collection(\"black_list\").where({checked:true}).limit(10).get({})"
+        //   }
+        // }).then(res=>{
+        //   console.log(res)
+        // })
+        request({
+          url: `https://it-blacklist-a6de4b.service.tcloudbase.com/api/tcb/databasequery?access_token=${useAccess.access_token}&env=prod-4g7smzwkdb65a941`,
+          method:'POST',
+          data: {
+            env:'prod-4g7smzwkdb65a941',
+            query: "db.collection(\"black_list\").where({checked:true}).limit(10).get({})"
+          }
+        }).then(res=>{
+          console.log(res)
+        })
+      },1000)
+    })
     return () => (
       <View>
-        <View class="index">
-          {state.msg}
-          <View class="btn">
-            <Button type="primary" onClick={() => handleClick('text', state.msg2, true)}>点我</Button>
-          </View>
-        </View>
+
       </View>
     )
   }

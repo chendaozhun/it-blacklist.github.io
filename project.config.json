@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "dist/",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": false,
     "enhance": false,
     "postcss": false,
@@ -38,5 +38,7 @@
   "compileType": "miniprogram",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
+  "libVersion": "2.18.1",
+  "appid": "wx6fb9fed8d1dd41aa",
   "condition": {}
 }
